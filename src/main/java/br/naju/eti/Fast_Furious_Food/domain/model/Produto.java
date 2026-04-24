@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 public class Produto {
-    
+//adiciona as informações, tudo que vai conter nessa classe, nomeando em string para informações, e double para numeros
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -22,6 +22,7 @@ public class Produto {
         private String descricao;
         private String img;
 
+//construtores
     public Produto() {
     }
 
@@ -34,7 +35,7 @@ public class Produto {
         this.descricao = descricao;
         this.img = img;
     }
-
+//getters & setters
     public Long getId() {
         return Id;
     }

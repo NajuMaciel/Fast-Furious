@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 public class Pedido {
-    
+//todas as informações da classe    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -33,12 +33,26 @@ public class Pedido {
     @NotBlank
     private String cliente;
     
-    @Enumerated(EnumType.STRING) //salva o status como numero
+    @Enumerated(EnumType.STRING) //salva o status como informação "aberto", se quiser em numero usar o "EnumType.ORDINAL"
     private StatusPedido status;
     
     private LocalDateTime dtAberto;
     private LocalDateTime dtFechado;
     private LocalDateTime dtEntregue;
+
+//construtor    
+    public Pedido() {
+    }
+
+    public Pedido(Long Id, String cpf, String cliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtFechado, LocalDateTime dtEntregue) {
+        this.Id = Id;
+        this.cpf = cpf;
+        this.cliente = cliente;
+        this.status = status;
+        this.dtAberto = dtAberto;
+        this.dtFechado = dtFechado;
+        this.dtEntregue = dtEntregue;
+    }
 
     
     //getters & setters

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
  * @author sesi3dia
  */
 
+//implementa as regras de negócio - em que situação o produto pode ser cadastrado
+
 @Service
 public class ProdutoService {
     

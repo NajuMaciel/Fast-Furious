@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{    
     
-    List<Produto> findByNome (String nome);
-    List<Produto> findByNomeContaining(String nome);
+    List<Produto> findByNome (String nome); //busca pelo nome completo do cliente
+    List<Produto> findByNomeContaining(String nome); //busca por alguma parte do nome (pode ser so o sobrenome)
+    List<Produto> findByCategoria(String categoria);
 }

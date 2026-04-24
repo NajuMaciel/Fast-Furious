@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sesi3dia
  */
 
+//controller é quem cuida da comunicação, ele cuida do mapeamento http, e conversa como json pelos metodods get, put, delete e post.
 @RestController
 public class ProdutoController {
     
@@ -53,7 +54,7 @@ public class ProdutoController {
     }
     
     
-    //GET ID
+    //GET ID - busca, ele entrega o resultado
     @GetMapping("/produto/{produtoId}")
     
     public ResponseEntity<Produto> buscar(@PathVariable Long produtoId) {
@@ -67,7 +68,21 @@ public class ProdutoController {
         }
     }
     
-   // POST PRODUTO
+    // GET categoria
+     @GetMapping("/produto/cat/{categoria}")
+    
+    public ResponseEntity<Produto> buscarCat(@PathVariable Long categoria) {
+
+        Optional<Categoria> categoria = produtoRepository.findById(categoria);
+
+        if (categoria.isPresent()) {
+            return ResponseEntity.ok(categoria.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+   // POST PRODUTO - add
     
     @PostMapping("/produto")
     @ResponseStatus(HttpStatus.CREATED)
@@ -76,7 +91,7 @@ public class ProdutoController {
         return produtoService.criar(produto);
     }
     
-    //PUT PRODUTO ID
+    //PUT PRODUTO ID - altera a informação 
     
     @PutMapping("/produto/{produtoId}")
     public ResponseEntity<Produto> atualizar(@PathVariable Long produtoId, @Valid @RequestBody Produto produto) {
@@ -90,6 +105,7 @@ public class ProdutoController {
         return ResponseEntity.ok(produto);
     }
     
+    //DELETE produto - ele exclui de acordo com o id
     @DeleteMapping("/produto/{produtoId}")
     public ResponseEntity<Void> excluir(@PathVariable Long produtoId) {
 
@@ -100,5 +116,7 @@ public class ProdutoController {
         produtoService.excluir(produtoId);
         return ResponseEntity.noContent().build();
     }
+    
+    //para o PUT e DEL, colocar o id do produto no endereço: http://localhost:8080/produto/ID , assim ele altera o produto certo.
 }
 
