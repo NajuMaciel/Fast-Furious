@@ -5,15 +5,18 @@
 package br.naju.eti.Fast_Furious_Food.domain.model;
 
 import br.naju.eti.Fast_Furious_Food.StatusPedido;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -39,12 +42,16 @@ public class Pedido {
     private LocalDateTime dtAberto;
     private LocalDateTime dtFechado;
     private LocalDateTime dtEntregue;
+    private LocalDateTime dtPronta;
+    
+    @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List <ItemPedido> listaItens;
 
 //construtor    
     public Pedido() {
     }
 
-    public Pedido(Long Id, String cpf, String cliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtFechado, LocalDateTime dtEntregue) {
+    public Pedido(Long Id, String cpf, String cliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtFechado, LocalDateTime dtEntregue, LocalDateTime dtPronta, List<ItemPedido> listaItens) {
         this.Id = Id;
         this.cpf = cpf;
         this.cliente = cliente;
@@ -52,10 +59,20 @@ public class Pedido {
         this.dtAberto = dtAberto;
         this.dtFechado = dtFechado;
         this.dtEntregue = dtEntregue;
+        this.dtPronta = dtPronta;
+        this.listaItens = listaItens;
+    }
+    
+    
+    public List<ItemPedido> getListaItens() {    
+        return listaItens;
     }
 
-    
     //getters & setters
+    public void setListaItens(List<ItemPedido> listaItens) {
+        this.listaItens = listaItens;
+    }
+
     public Long getId() {
         return Id;
     }
@@ -110,6 +127,14 @@ public class Pedido {
 
     public void setDtEntregue(LocalDateTime dtEntregue) {
         this.dtEntregue = dtEntregue;
+    }
+
+    public LocalDateTime getDtPronta() {
+        return dtPronta;
+    }
+
+    public void setDtPronta(LocalDateTime dtPronta) {
+        this.dtPronta = dtPronta;
     }
     
     

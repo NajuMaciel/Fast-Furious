@@ -4,10 +4,13 @@
  */
 package br.naju.eti.Fast_Furious_Food.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 /**
  *
@@ -23,17 +26,38 @@ public class ItemPedido {
     private double qtd;
     private double vUnit;
     private String obs;
+    
+    @ManyToOne
+    @JoinColumn(name="pedido_id")
+    @JsonIgnore
+    private Pedido pedido;
+
+    
 
     public ItemPedido() {
     }
-    
-    public ItemPedido (Long Id, double qtd, double vUnit, String obs) {
+
+    public ItemPedido(Long Id, double qtd, double vUnit, String obs, Pedido pedido) {
         this.Id = Id;
         this.qtd = qtd;
         this.vUnit = vUnit;
         this.obs = obs;
+        this.pedido = pedido;
+    }
+    
+   
+    public ItemPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+    
     public Long getId() {
         return Id;
     }

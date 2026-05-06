@@ -73,10 +73,10 @@ public class ProdutoController {
     
     public ResponseEntity<Produto> buscarCat(@PathVariable Long categoria) {
 
-        Optional<Categoria> categoria = produtoRepository.findById(categoria);
+        Optional<Produto> produto = produtoRepository.findById(categoria);
 
-        if (categoria.isPresent()) {
-            return ResponseEntity.ok(categoria.get());
+        if (produto.isPresent()) {
+            return ResponseEntity.ok(produto.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -105,7 +105,7 @@ public class ProdutoController {
         return ResponseEntity.ok(produto);
     }
     
-    //DELETE produto - ele exclui de acordo com o id
+    //DELETE produto ID - ele exclui de acordo com o id
     @DeleteMapping("/produto/{produtoId}")
     public ResponseEntity<Void> excluir(@PathVariable Long produtoId) {
 

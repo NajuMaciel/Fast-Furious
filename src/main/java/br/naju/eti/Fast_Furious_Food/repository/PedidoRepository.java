@@ -4,6 +4,7 @@
  */
 package br.naju.eti.Fast_Furious_Food.repository;
 
+import br.naju.eti.Fast_Furious_Food.StatusPedido;
 import br.naju.eti.Fast_Furious_Food.domain.model.Pedido;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     
     List<Pedido>findByCpf (String cpf); //busca o pedido pelo cpf
     List<Pedido>findByClienteContainingIgnoreCase (String cliente);//busa pelo nome do cliente e o "ignore case" evita erros de digitação (por exemploletras miusculas e minusculas)
-    List<Pedido>findByStatus (String status); //busca pelo status do pedido
+    List<Pedido>findByStatus (StatusPedido status); //busca pelo status do pedido
     
     
 }
