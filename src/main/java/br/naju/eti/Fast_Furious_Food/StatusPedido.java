@@ -10,5 +10,5 @@ package br.naju.eti.Fast_Furious_Food;
  */
 public enum StatusPedido {
     
-    ABERTA, PRONTA, ENTREGUE, CANCELADA, FINALIZADA
+    ABERTA, PRONTA, CANCELADA, FINALIZADA
 }

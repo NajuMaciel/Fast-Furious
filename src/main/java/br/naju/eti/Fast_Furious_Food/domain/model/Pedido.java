@@ -40,8 +40,8 @@ public class Pedido {
     private StatusPedido status;
     
     private LocalDateTime dtAberto;
-    private LocalDateTime dtFechado;
-    private LocalDateTime dtEntregue;
+    private LocalDateTime dtFinalizada;
+    private LocalDateTime dtCancelada;
     private LocalDateTime dtPronta;
     
     @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -51,14 +51,14 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long Id, String cpf, String cliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtFechado, LocalDateTime dtEntregue, LocalDateTime dtPronta, List<ItemPedido> listaItens) {
+    public Pedido(Long Id, String cpf, String cliente, StatusPedido status, LocalDateTime dtAberto, LocalDateTime dtFinalizada, LocalDateTime dtCancelada, LocalDateTime dtPronta, List<ItemPedido> listaItens) {
         this.Id = Id;
         this.cpf = cpf;
         this.cliente = cliente;
         this.status = status;
         this.dtAberto = dtAberto;
-        this.dtFechado = dtFechado;
-        this.dtEntregue = dtEntregue;
+        this.dtFinalizada = dtFinalizada;
+        this.dtCancelada = dtCancelada;
         this.dtPronta = dtPronta;
         this.listaItens = listaItens;
     }
@@ -113,20 +113,20 @@ public class Pedido {
         this.dtAberto = dtAberto;
     }
 
-    public LocalDateTime getDtFechado() {
-        return dtFechado;
+    public LocalDateTime getDtFinalizada() {
+        return dtFinalizada;
     }
 
-    public void setDtFechado(LocalDateTime dtFechado) {
-        this.dtFechado = dtFechado;
+    public void setDtFechado(LocalDateTime dtFinalizada) {
+        this.dtFinalizada = dtFinalizada;
     }
 
-    public LocalDateTime getDtEntregue() {
-        return dtEntregue;
+    public LocalDateTime getDtCancelada() {
+        return dtCancelada;
     }
 
-    public void setDtEntregue(LocalDateTime dtEntregue) {
-        this.dtEntregue = dtEntregue;
+    public void setDtCancelada(LocalDateTime dtCancelada) {
+        this.dtCancelada = dtCancelada;
     }
 
     public LocalDateTime getDtPronta() {

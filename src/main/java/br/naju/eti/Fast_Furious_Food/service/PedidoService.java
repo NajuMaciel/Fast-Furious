@@ -51,12 +51,12 @@ public class PedidoService {
             pedidoAntigo.setDtPronta(LocalDateTime.now());
         } else if (novoStatus == StatusPedido.FINALIZADA && pedidoAntigo.getStatus() != StatusPedido.PRONTA) {
             pedidoAntigo.setStatus(StatusPedido.FINALIZADA);
-            pedidoAntigo.setDtEntregue(LocalDateTime.now());
+            pedidoAntigo.setDtCancelada(LocalDateTime.now());
         }else if (novoStatus == StatusPedido.CANCELADA && pedidoAntigo.getStatus() != StatusPedido.FINALIZADA) {
             pedidoAntigo.setStatus(StatusPedido.CANCELADA);
-            pedidoAntigo.setDtEntregue(LocalDateTime.now());
+            pedidoAntigo.setDtCancelada(LocalDateTime.now());
         } else {
-            throw new RuntimeException("Status" + novoStatus + "não pode ser aplicado em ." + pedidoAntigo.getStatus().name());
+            throw new RuntimeException("Status" + novoStatus + " não pode ser aplicado em " + pedidoAntigo.getStatus().name());
         }
         
         

@@ -26,6 +26,9 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.naju.eti.Fast_Furious_Food.domain.model.Produto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -48,6 +51,12 @@ public class ProdutoController {
     
     //GET PRODUTO:
      @GetMapping ("/produto")
+     
+     @Operation(summary = "Pegar produto", description = "Devolver produto")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
     
     public List<Produto> listas (){
         return produtoRepository.findAll();
@@ -56,6 +65,13 @@ public class ProdutoController {
     
     //GET ID - busca, ele entrega o resultado
     @GetMapping("/produto/{produtoId}")
+    
+    
+    @Operation(summary = "Pegar produto pelo Id", description = "Devolver produto pelo Id")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
     
     public ResponseEntity<Produto> buscar(@PathVariable Long produtoId) {
 
@@ -70,6 +86,12 @@ public class ProdutoController {
     
     // GET categoria
      @GetMapping("/produto/cat/{categoria}")
+     
+     @Operation(summary = "Pegar categoria", description = "Devolver categoria")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
     
     public ResponseEntity<Produto> buscarCat(@PathVariable Long categoria) {
 
@@ -85,6 +107,13 @@ public class ProdutoController {
    // POST PRODUTO - add
     
     @PostMapping("/produto")
+    
+    @Operation(summary = "Colocar produto", description = "colocar produto")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+    
     @ResponseStatus(HttpStatus.CREATED)
     public Produto adicionar(@Valid @RequestBody Produto produto) {
 
@@ -94,6 +123,13 @@ public class ProdutoController {
     //PUT PRODUTO ID - altera a informação 
     
     @PutMapping("/produto/{produtoId}")
+    
+    @Operation(summary = "alterar produto pelo Id", description = "alterar produto pelo Id")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+    
     public ResponseEntity<Produto> atualizar(@PathVariable Long produtoId, @Valid @RequestBody Produto produto) {
 
         if (!produtoRepository.existsById(produtoId)) {

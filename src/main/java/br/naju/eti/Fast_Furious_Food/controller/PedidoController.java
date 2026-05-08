@@ -10,6 +10,10 @@ import br.naju.eti.Fast_Furious_Food.dto.AtualizaStatusDTO;
 import br.naju.eti.Fast_Furious_Food.repository.PedidoRepository;
 import br.naju.eti.Fast_Furious_Food.service.PedidoService;
 import ch.qos.logback.core.status.Status;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +36,36 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PedidoController {
-    
+
     @Autowired
     private PedidoRepository pedidoRepository;
-    
+
     @Autowired
     private PedidoService pedidoService;
-    
+
     //get pedido
     @GetMapping("/pedido")
-    public List<Pedido> Listas () {
+
+    @Operation(summary = "Pegar pedido", description = "Devolver pedido")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+
+    public List<Pedido> Listas() {
         return pedidoRepository.findAll();
+
     }
-    
+
     //get pedido ID
     @GetMapping("/pedido/{pedidoId}")
-    
+
+    @Operation(summary = "Pegar pedido pelo Id", description = "Devolver pedido pelo Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+
     public ResponseEntity<Pedido> buscar(@PathVariable Long pedidoId) {
 
         Optional<Pedido> produto = pedidoRepository.findById(pedidoId);
@@ -58,17 +76,30 @@ public class PedidoController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
     //POST pedido
     @PostMapping("/pedido")
+
+    @Operation(summary = "Posta um pedido", description = "Posta um pedido")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found ")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public Pedido adicionar(@Valid @RequestBody Pedido pedido) {
 
         return pedidoService.criar(pedido);
     }
-    
+
     //PUT pedido ID
     @PutMapping("/pedido/{pedidoId}")
+
+    @Operation(summary = "Pegar pedido pelo Id", description = "Devolver pedido pelo Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+
     public ResponseEntity<Pedido> atualizar(@PathVariable Long pedidoId, @Valid @RequestBody Pedido pedido) {
 
         if (!pedidoRepository.existsById(pedidoId)) {
@@ -79,7 +110,7 @@ public class PedidoController {
         pedido = pedidoService.criar(pedido);
         return ResponseEntity.ok(pedido);
     }
-    
+
     //DELETE pedido ID
     @DeleteMapping("/pedido/{pedidoId}")
     public ResponseEntity<Void> excluir(@PathVariable Long pedidoId) {
@@ -91,31 +122,44 @@ public class PedidoController {
         pedidoService.excluir(pedidoId);
         return ResponseEntity.noContent().build();
     }
-    
+
     //PUT status
-    @PutMapping ("/pedido/atualizastatus/{pedidoId}")
-    public ResponseEntity<Pedido> atualizaStatus (@Valid @PathVariable Long pedidoID,
+    @PutMapping("/pedido/atualizarstatus/{pedidoId}")
+
+    @Operation(summary = "colocar pedido pelo status", description = "colocar pedido pelo status")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+
+    public ResponseEntity<Pedido> atualizarStatus(@Valid @PathVariable Long pedidoId,
             @RequestBody AtualizaStatusDTO atualizaStatusDTO) {
-        
-        Optional<Pedido> optPedido = pedidoService.atualizarStatus(pedidoID, atualizaStatusDTO.status());
-        
+
+        Optional<Pedido> optPedido = pedidoService.atualizarStatus(pedidoId, atualizaStatusDTO.status());
+
         if (optPedido.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        
+
         return ResponseEntity.ok(optPedido.get());
     }
-    
+
     //GET status
-    @GetMapping ("/pedido/status/{status}")
-    public ResponseEntity<List <Pedido>> buscar (@PathVariable StatusPedido status) {
+    @GetMapping("/pedido/status/{status}")
+
+    @Operation(summary = "Pegar pedido pelo status", description = "Devolver pedido pelo status")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+        @ApiResponse(responseCode = "404", description = "Not found - O pedido não foi encontrado")
+    })
+
+    public ResponseEntity<List<Pedido>> buscar(@PathVariable StatusPedido status) {
         List<Pedido> pedido = pedidoRepository.findByStatus(status);
-        
+
         if (pedido.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(pedido);
         }
     }
-    
 }
